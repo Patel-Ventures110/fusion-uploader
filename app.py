@@ -1,7 +1,8 @@
 import os
 import csv
-import mimetypes
+import io
 import boto3
+from PIL import Image
 from flask import Flask, request, jsonify, render_template, send_file
 from dotenv import load_dotenv
 
@@ -16,6 +17,17 @@ BUCKET_NAME           = os.getenv("S3_BUCKET_NAME")
 CSV_FILE              = "atrex_import.csv"
 
 
+def convert_to_jpeg(file_obj):
+    """Convert any image to JPEG format and return as bytes buffer."""
+    img = Image.open(file_obj)
+    if img.mode in ("RGBA", "P", "LA"):
+        img = img.convert("RGB")
+    buffer = io.BytesIO()
+    img.save(buffer, format="JPEG", quality=90)
+    buffer.seek(0)
+    return buffer
+
+
 def upload_to_s3(file_obj, filename):
     s3 = boto3.client(
         "s3",
@@ -23,22 +35,17 @@ def upload_to_s3(file_obj, filename):
         aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
         region_name=AWS_REGION,
     )
-    # Safely determine content type
-    if filename:
-        content_type, _ = mimetypes.guess_type(filename)
-    else:
-        content_type = None
-    if not content_type:
-        content_type = "image/jpeg"
 
-    # Sanitize filename
-    safe_filename = os.path.basename(filename) if filename else "image.jpg"
+    # Convert to JPEG and rename extension
+    jpeg_buffer = convert_to_jpeg(file_obj)
+    base = os.path.splitext(os.path.basename(filename))[0]
+    safe_filename = f"{base}.jpg"
 
     s3.upload_fileobj(
-        file_obj,
+        jpeg_buffer,
         BUCKET_NAME,
         safe_filename,
-        ExtraArgs={"ContentType": content_type},
+        ExtraArgs={"ContentType": "image/jpeg"},
     )
     return f"https://{BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{safe_filename}"
 
