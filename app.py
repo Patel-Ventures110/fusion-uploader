@@ -76,7 +76,8 @@ def convert_to_jpeg(file_obj):
 def upload_image_to_s3(file_obj, filename):
     s3 = get_s3()
     jpeg_buffer = convert_to_jpeg(file_obj)
-    base = os.path.splitext(os.path.basename(filename))[0]
+    filename = filename or "image.jpg"
+    base = os.path.splitext(os.path.basename(filename))[0] or "image"
     safe_filename = f"{base}.jpg"
     s3.upload_fileobj(
         jpeg_buffer,
@@ -163,4 +164,3 @@ def clear():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
- 
