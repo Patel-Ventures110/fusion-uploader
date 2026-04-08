@@ -3,8 +3,12 @@ import csv
 import io
 import boto3
 from PIL import Image
+from pillow_heif import register_heif_opener
 from flask import Flask, request, jsonify, render_template, send_file
 from dotenv import load_dotenv
+ 
+# Register HEIF/HEIC support
+register_heif_opener()
  
 load_dotenv()
  
@@ -59,15 +63,11 @@ def append_to_s3_csv(new_rows):
  
  
 def convert_to_jpeg(file_obj):
-    # Read all bytes first to ensure the stream is valid
     raw = file_obj.read()
     if not raw:
         raise ValueError("Empty file received")
     img = Image.open(io.BytesIO(raw))
-    if img.mode in ("RGBA", "P", "LA"):
-        img = img.convert("RGB")
-    elif img.mode != "RGB":
-        img = img.convert("RGB")
+    img = img.convert("RGB")
     buffer = io.BytesIO()
     img.save(buffer, format="JPEG", quality=90)
     buffer.seek(0)
