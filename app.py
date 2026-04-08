@@ -27,21 +27,17 @@ def get_s3():
  
  
 def read_csv_from_s3():
-    """Read the CSV from S3 and return list of dicts."""
     s3 = get_s3()
     try:
         obj = s3.get_object(Bucket=BUCKET_NAME, Key=CSV_KEY)
         content = obj["Body"].read().decode("utf-8")
         reader = csv.DictReader(io.StringIO(content))
         return [{"sku": row["SKU"], "url": row["IMG"]} for row in reader]
-    except s3.exceptions.NoSuchKey:
-        return []
     except Exception:
         return []
  
  
 def write_csv_to_s3(rows):
-    """Write all rows to the CSV in S3."""
     s3 = get_s3()
     output = io.StringIO()
     writer = csv.writer(output)
@@ -57,15 +53,20 @@ def write_csv_to_s3(rows):
  
  
 def append_to_s3_csv(new_rows):
-    """Append new rows to existing CSV in S3."""
     existing = read_csv_from_s3()
     existing.extend(new_rows)
     write_csv_to_s3(existing)
  
  
 def convert_to_jpeg(file_obj):
-    img = Image.open(file_obj)
+    # Read all bytes first to ensure the stream is valid
+    raw = file_obj.read()
+    if not raw:
+        raise ValueError("Empty file received")
+    img = Image.open(io.BytesIO(raw))
     if img.mode in ("RGBA", "P", "LA"):
+        img = img.convert("RGB")
+    elif img.mode != "RGB":
         img = img.convert("RGB")
     buffer = io.BytesIO()
     img.save(buffer, format="JPEG", quality=90)
@@ -75,10 +76,10 @@ def convert_to_jpeg(file_obj):
  
 def upload_image_to_s3(file_obj, filename):
     s3 = get_s3()
-    jpeg_buffer = convert_to_jpeg(file_obj)
     filename = filename or "image.jpg"
     base = os.path.splitext(os.path.basename(filename))[0] or "image"
     safe_filename = f"{base}.jpg"
+    jpeg_buffer = convert_to_jpeg(file_obj)
     s3.upload_fileobj(
         jpeg_buffer,
         BUCKET_NAME,
@@ -125,7 +126,7 @@ def upload():
             url = upload_image_to_s3(file, filename)
             results.append({"sku": sku, "url": url})
         except Exception as e:
-            errors.append(f"{file.filename}: {str(e)}")
+            errors.append(f"{filename}: {str(e)}")
  
     if results:
         append_to_s3_csv(results)
@@ -164,3 +165,4 @@ def clear():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
+ 
