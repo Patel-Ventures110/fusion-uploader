@@ -23,17 +23,24 @@ def upload_to_s3(file_obj, filename):
         aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
         region_name=AWS_REGION,
     )
-    content_type, _ = mimetypes.guess_type(filename)
+    # Safely determine content type
+    if filename:
+        content_type, _ = mimetypes.guess_type(filename)
+    else:
+        content_type = None
     if not content_type:
         content_type = "image/jpeg"
+
+    # Sanitize filename
+    safe_filename = os.path.basename(filename) if filename else "image.jpg"
 
     s3.upload_fileobj(
         file_obj,
         BUCKET_NAME,
-        filename,
+        safe_filename,
         ExtraArgs={"ContentType": content_type},
     )
-    return f"https://{BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{filename}"
+    return f"https://{BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{safe_filename}"
 
 
 def append_to_csv(rows):
@@ -53,7 +60,8 @@ def index():
 
 @app.route("/logo")
 def logo():
-    return send_file("logo.jpeg", mimetype="image/jpeg")
+    logo_path = os.path.join(os.path.dirname(__file__), "logo.jpeg")
+    return send_file(logo_path, mimetype="image/jpeg")
 
 
 @app.route("/upload", methods=["POST"])
@@ -73,7 +81,8 @@ def upload():
             errors.append(f"{file.filename}: SKU is empty")
             continue
         try:
-            url = upload_to_s3(file, file.filename)
+            filename = file.filename or "image.jpg"
+            url = upload_to_s3(file, filename)
             results.append((sku, url))
         except Exception as e:
             errors.append(f"{file.filename}: {str(e)}")
@@ -102,5 +111,5 @@ def clear():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
+    port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
