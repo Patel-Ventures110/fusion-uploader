@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
     :root {
       --gray:    #3d3d3d;
       --orange:  #e07020;
@@ -18,7 +18,7 @@
       --error:   #d93025;
       --radius:  14px;
     }
-
+ 
     body {
       background: #ffffff;
       color: var(--gray);
@@ -30,304 +30,201 @@
       padding: 60px 24px 100px;
       -webkit-font-smoothing: antialiased;
     }
-
+ 
     .wrap { width: 100%; max-width: 680px; }
-
-    /* ── Header ── */
+ 
     header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 64px;
+      margin-bottom: 48px;
       padding-bottom: 24px;
       border-bottom: 1px solid var(--border);
     }
-
-    .logo img {
-      height: 36px;
-      width: auto;
-      display: block;
-    }
-
-    .badge {
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    /* ── Hero ── */
-    .hero { margin-bottom: 48px; }
-
-    .hero h1 {
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: var(--gray);
-      margin-bottom: 12px;
-    }
-
+ 
+    .logo img { height: 36px; width: auto; display: block; }
+    .badge { font-size: 0.7rem; font-weight: 500; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+ 
+    .hero { margin-bottom: 36px; }
+    .hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; color: var(--gray); margin-bottom: 10px; }
     .hero h1 span { color: var(--orange); }
-
-    .hero p {
-      font-size: 0.95rem;
-      font-weight: 400;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
+    .hero p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+ 
     /* ── Drop Zone ── */
     #dropzone {
       border: 1.5px dashed var(--border);
       border-radius: var(--radius);
-      padding: 56px 32px;
+      padding: 48px 32px;
       text-align: center;
       cursor: pointer;
       transition: border-color 0.2s, background 0.2s;
       background: var(--light);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
-
-    #dropzone.over {
-      border-color: var(--orange);
-      background: #fff8f3;
-    }
-
+    #dropzone.over { border-color: var(--orange); background: #fff8f3; }
     #dropzone input { display: none; }
-
-    .drop-icon {
-      width: 44px;
-      height: 44px;
-      margin: 0 auto 16px;
-      background: var(--border);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-    }
-
-    .drop-title {
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--gray);
-      margin-bottom: 6px;
-    }
-
-    .drop-sub {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    .drop-sub strong {
-      color: var(--orange);
-      cursor: pointer;
-      font-weight: 500;
-    }
-
+    .drop-icon { width: 40px; height: 40px; margin: 0 auto 14px; background: var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .drop-title { font-size: 0.9rem; font-weight: 500; color: var(--gray); margin-bottom: 5px; }
+    .drop-sub { font-size: 0.78rem; color: var(--muted); }
+    .drop-sub strong { color: var(--orange); cursor: pointer; font-weight: 500; }
+ 
     /* ── Queue ── */
-    #queue { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
-
+    #queue { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+ 
     .queue-item {
       background: #fff;
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 14px 16px;
+      padding: 12px 14px;
       display: grid;
       grid-template-columns: 48px 1fr auto auto;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       animation: slideIn 0.2s ease;
     }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .thumb {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      object-fit: cover;
-      background: var(--light);
-    }
-
+    @keyframes slideIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+ 
+    .thumb { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; background: var(--light); }
     .item-info { overflow: hidden; }
-
-    .item-name {
-      font-size: 0.75rem;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 6px;
-    }
-
+    .item-name { font-size: 0.72rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px; }
+ 
     .sku-input {
       width: 100%;
       background: var(--light);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 7px 10px;
+      padding: 6px 10px;
       color: var(--gray);
       font-family: 'Inter', sans-serif;
       font-size: 0.82rem;
       outline: none;
       transition: border-color 0.2s;
     }
-
     .sku-input:focus { border-color: var(--orange); background: #fff; }
     .sku-input::placeholder { color: var(--muted); }
-
-    .item-status {
-      font-size: 0.7rem;
-      color: var(--muted);
-      white-space: nowrap;
-      font-weight: 500;
-    }
+ 
+    .item-status { font-size: 0.7rem; color: var(--muted); white-space: nowrap; font-weight: 500; }
     .item-status.ok  { color: var(--success); }
     .item-status.err { color: var(--error); }
-
-    .remove-btn {
-      background: none;
-      border: none;
-      color: var(--muted);
-      cursor: pointer;
-      font-size: 1rem;
-      padding: 4px;
-      line-height: 1;
-      transition: color 0.15s;
-    }
+ 
+    .remove-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; padding: 4px; transition: color 0.15s; }
     .remove-btn:hover { color: var(--error); }
-
+ 
     /* ── Progress ── */
-    .progress-wrap {
-      height: 2px;
-      background: var(--border);
-      border-radius: 2px;
-      margin-bottom: 24px;
-      overflow: hidden;
-      display: none;
-    }
+    .progress-wrap { height: 2px; background: var(--border); border-radius: 2px; margin-bottom: 20px; overflow: hidden; display: none; }
     .progress-wrap.active { display: block; }
-    .progress-bar {
-      height: 100%;
-      background: var(--orange);
-      border-radius: 2px;
-      transition: width 0.3s ease;
-      width: 0%;
-    }
-
+    .progress-bar { height: 100%; background: var(--orange); border-radius: 2px; transition: width 0.3s ease; width: 0%; }
+ 
     /* ── Actions ── */
-    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
-
-    .btn {
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
-      font-size: 0.85rem;
-      padding: 12px 22px;
-      border-radius: 980px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.15s, opacity 0.15s, transform 0.1s;
-      letter-spacing: -0.01em;
-    }
-
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 48px; }
+    .btn { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.85rem; padding: 11px 22px; border-radius: 980px; border: none; cursor: pointer; transition: background 0.15s, opacity 0.15s, transform 0.1s; }
     .btn:active { transform: scale(0.98); }
     .btn:disabled { opacity: 0.35; cursor: not-allowed; }
-
-    .btn-primary {
-      background: var(--orange);
-      color: #fff;
-      flex: 1;
-    }
+    .btn-primary { background: var(--orange); color: #fff; flex: 1; }
     .btn-primary:hover:not(:disabled) { background: #c96010; }
-
-    .btn-ghost {
-      background: var(--light);
-      color: var(--gray);
-      border: 1px solid var(--border);
-    }
+    .btn-ghost { background: var(--light); color: var(--gray); border: 1px solid var(--border); }
     .btn-ghost:hover:not(:disabled) { background: var(--border); }
-
+ 
     /* ── Log ── */
-    #log {
-      margin-top: 28px;
-      background: var(--light);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px 20px;
-      font-size: 0.75rem;
-      line-height: 1.9;
-      display: none;
-      max-height: 200px;
-      overflow-y: auto;
-      font-family: 'SF Mono', 'Fira Mono', monospace;
-    }
+    #log { margin-bottom: 32px; background: var(--light); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; font-size: 0.75rem; line-height: 1.9; display: none; max-height: 160px; overflow-y: auto; font-family: 'SF Mono', 'Fira Mono', monospace; }
     #log.show { display: block; }
     .log-ok   { color: var(--success); }
     .log-err  { color: var(--error); }
     .log-info { color: var(--muted); }
-
-    /* ── Footer ── */
-    footer {
-      margin-top: 64px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      font-size: 0.72rem;
+ 
+    /* ── Uploaded Records ── */
+    .section-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--muted);
-      text-align: center;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
+ 
+    .section-title span { color: var(--orange); font-size: 0.75rem; }
+ 
+    #records-list { display: flex; flex-direction: column; gap: 8px; }
+ 
+    .record-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      align-items: center;
+      gap: 12px;
+    }
+ 
+    .record-thumb { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; background: var(--light); }
+    .record-sku { font-size: 0.82rem; font-weight: 500; color: var(--gray); }
+    .record-url { font-size: 0.68rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+    .record-info { overflow: hidden; }
+ 
+    .record-link {
+      font-size: 0.7rem;
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .record-link:hover { text-decoration: underline; }
+ 
+    .empty-state { text-align: center; padding: 32px; color: var(--muted); font-size: 0.82rem; background: var(--light); border-radius: var(--radius); border: 1px dashed var(--border); }
+ 
+    footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 0.72rem; color: var(--muted); text-align: center; }
   </style>
 </head>
 <body>
 <div class="wrap">
-
+ 
   <header>
-    <div class="logo">
-      <img src="/logo" alt="Fusion Cellular" />
-    </div>
+    <div class="logo"><img src="/logo" alt="Fusion Cellular" /></div>
     <div class="badge">Image Uploader</div>
   </header>
-
+ 
   <div class="hero">
     <h1>Upload images,<br><span>instantly.</span></h1>
     <p>Drop your product photos, enter the SKU for each,<br>and download your Atrex-ready CSV in one click.</p>
   </div>
-
-  <!-- Drop Zone -->
+ 
   <div id="dropzone">
     <input type="file" id="fileInput" accept="image/*" multiple />
     <div class="drop-icon">↑</div>
     <div class="drop-title">Drop product images here</div>
-    <div class="drop-sub">or <strong onclick="document.getElementById('fileInput').click()">choose files</strong> &nbsp;·&nbsp; JPG, PNG, WEBP</div>
+    <div class="drop-sub">or <strong onclick="document.getElementById('fileInput').click()">choose files</strong> &nbsp;·&nbsp; JPG, PNG, WEBP, HEIC</div>
   </div>
-
-  <!-- Queue -->
+ 
   <div id="queue"></div>
-
-  <!-- Progress -->
+ 
   <div class="progress-wrap" id="progressWrap">
     <div class="progress-bar" id="progressBar"></div>
   </div>
-
-  <!-- Actions -->
+ 
   <div class="actions">
     <button class="btn btn-primary" id="uploadBtn" disabled onclick="uploadAll()">Upload & Save to CSV</button>
     <button class="btn btn-ghost" onclick="downloadCSV()">Download CSV</button>
-    <button class="btn btn-ghost" onclick="clearAll()">Clear</button>
+    <button class="btn btn-ghost" onclick="confirmClear()">Clear CSV</button>
   </div>
-
-  <!-- Log -->
+ 
   <div id="log"></div>
-
+ 
+  <!-- Uploaded Records -->
+  <div class="section-title">
+    Already uploaded <span id="record-count"></span>
+  </div>
+  <div id="records-list">
+    <div class="empty-state">No images uploaded yet.</div>
+  </div>
+ 
   <footer>Fusion Cellular &nbsp;·&nbsp; Internal Tool</footer>
-
+ 
 </div>
-
+ 
 <script>
   const dropzone     = document.getElementById('dropzone');
   const fileInput    = document.getElementById('fileInput');
@@ -336,21 +233,49 @@
   const progressWrap = document.getElementById('progressWrap');
   const progressBar  = document.getElementById('progressBar');
   const log          = document.getElementById('log');
-
+  const recordsList  = document.getElementById('records-list');
+  const recordCount  = document.getElementById('record-count');
+ 
   let items = [];
-
+ 
+  // ── Load existing records on page load ──
+  async function loadRecords() {
+    try {
+      const res  = await fetch('/records');
+      const data = await res.json();
+      renderRecords(data);
+    } catch (e) {
+      console.error('Failed to load records', e);
+    }
+  }
+ 
+  function renderRecords(records) {
+    if (!records || records.length === 0) {
+      recordsList.innerHTML = '<div class="empty-state">No images uploaded yet.</div>';
+      recordCount.textContent = '';
+      return;
+    }
+ 
+    recordCount.textContent = `${records.length} item${records.length !== 1 ? 's' : ''}`;
+    recordsList.innerHTML = records.slice().reverse().map(r => `
+      <div class="record-item">
+        <img class="record-thumb" src="${r.url}" alt="${r.sku}" onerror="this.style.background='#eee'" />
+        <div class="record-info">
+          <div class="record-sku">${r.sku}</div>
+          <div class="record-url">${r.url}</div>
+        </div>
+        <a class="record-link" href="${r.url}" target="_blank">View ↗</a>
+      </div>
+    `).join('');
+  }
+ 
+  // ── Drag & Drop ──
   dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('over'); });
   dropzone.addEventListener('dragleave', () => dropzone.classList.remove('over'));
-  dropzone.addEventListener('drop', e => {
-    e.preventDefault();
-    dropzone.classList.remove('over');
-    addFiles([...e.dataTransfer.files]);
-  });
-  dropzone.addEventListener('click', e => {
-    if (e.target.tagName !== 'STRONG') fileInput.click();
-  });
+  dropzone.addEventListener('drop', e => { e.preventDefault(); dropzone.classList.remove('over'); addFiles([...e.dataTransfer.files]); });
+  dropzone.addEventListener('click', e => { if (e.target.tagName !== 'STRONG') fileInput.click(); });
   fileInput.addEventListener('change', () => addFiles([...fileInput.files]));
-
+ 
   function addFiles(files) {
     files.filter(f => f.type.startsWith('image/')).forEach(file => {
       const id = Date.now() + Math.random();
@@ -361,7 +286,7 @@
     });
     updateBtn();
   }
-
+ 
   function renderItem(id, name, src) {
     const div = document.createElement('div');
     div.className = 'queue-item';
@@ -377,21 +302,21 @@
     `;
     queue.appendChild(div);
   }
-
+ 
   function removeItem(id) {
     items = items.filter(i => i.id !== id);
     const el = document.getElementById(`item-${id}`);
     if (el) el.remove();
     updateBtn();
   }
-
+ 
   function updateBtn() { uploadBtn.disabled = items.length === 0; }
-
+ 
   async function uploadAll() {
     if (items.length === 0) return;
     const formData = new FormData();
     let valid = true;
-
+ 
     items.forEach(({ file, id }) => {
       const skuInput = document.querySelector(`.sku-input[data-id="${id}"]`);
       const sku = skuInput ? skuInput.value.trim() : '';
@@ -399,19 +324,19 @@
       formData.append('images', file);
       formData.append('skus', sku);
     });
-
+ 
     if (!valid) return;
-
+ 
     uploadBtn.disabled = true;
     progressWrap.classList.add('active');
     progressBar.style.width = '10%';
     logMsg('Uploading...', 'info');
-
+ 
     try {
       const res  = await fetch('/upload', { method: 'POST', body: formData });
       progressBar.style.width = '90%';
       const data = await res.json();
-
+ 
       data.uploaded.forEach(({ sku, url }) => {
         const item = items.find(i => {
           const input = document.querySelector(`.sku-input[data-id="${i.id}"]`);
@@ -420,28 +345,28 @@
         if (item) setStatus(item.id, '✓ uploaded', 'ok');
         logMsg(`✓ ${sku} → ${url}`, 'ok');
       });
-
+ 
       data.errors.forEach(err => logMsg(`✗ ${err}`, 'err'));
-
+ 
       progressBar.style.width = '100%';
-      setTimeout(() => {
-        progressWrap.classList.remove('active');
-        progressBar.style.width = '0%';
-      }, 600);
-
+      setTimeout(() => { progressWrap.classList.remove('active'); progressBar.style.width = '0%'; }, 600);
+ 
+      // Refresh records list
+      await loadRecords();
+ 
     } catch (e) {
       logMsg(`✗ ${e.message}`, 'err');
       progressWrap.classList.remove('active');
     }
-
+ 
     uploadBtn.disabled = false;
   }
-
+ 
   function setStatus(id, msg, type) {
     const el = document.getElementById(`status-${id}`);
     if (el) { el.textContent = msg; el.className = `item-status ${type}`; }
   }
-
+ 
   function logMsg(msg, type) {
     log.classList.add('show');
     const line = document.createElement('div');
@@ -450,9 +375,15 @@
     log.appendChild(line);
     log.scrollTop = log.scrollHeight;
   }
-
+ 
   function downloadCSV() { window.location.href = '/download'; }
-
+ 
+  function confirmClear() {
+    if (confirm('Are you sure you want to clear the entire CSV? This cannot be undone.')) {
+      fetch('/clear', { method: 'POST' }).then(() => { loadRecords(); logMsg('CSV cleared.', 'info'); });
+    }
+  }
+ 
   function clearAll() {
     items = [];
     queue.innerHTML = '';
@@ -460,6 +391,10 @@
     log.classList.remove('show');
     updateBtn();
   }
+ 
+  // Load records on page load
+  loadRecords();
 </script>
 </body>
 </html>
+ 
